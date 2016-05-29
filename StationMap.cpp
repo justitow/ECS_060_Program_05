@@ -3,3 +3,13 @@
 //
 
 #include "StationMap.h"
+
+StationMap::StationMap()
+{
+
+}
+
+StationNode::StationNode()
+{
+
+}

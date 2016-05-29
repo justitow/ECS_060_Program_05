@@ -7,10 +7,21 @@
 
 
 #include "BinaryHeap.h"
+#include "TrainRunner.h"
 
+class StationNode
+{
+  bool known;
+  int distance;
+  StationNode* start;
+  Station* stations;
+public:
+  StationNode();
+};
 
 class StationMap
 {
+
 public:
   StationMap();
 };

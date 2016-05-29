@@ -10,16 +10,9 @@ Train::Train(Station *stns, int numstns, int numcrs) : numStations(numstns), num
   memcpy(this->stations, stns, numstns *  sizeof *stns);
 
   this->distances = new int[numstns];
-
+  stationMaps = new StationMap[numStations]();
 } // Train()
 
-void Train::explore_options()
-{
-  for (int i = 0; i < this->numStations; i++)
-  {
-
-  }
-}
 
 void Train::run(Car *cars, Operation *operations, int *numOperations)
 {
