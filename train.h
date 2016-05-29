@@ -2,6 +2,7 @@
 #define	TRAIN_H
 
 #include "TrainRunner.h"
+#include "BinaryHeap.h"
 
 class Train
 {
