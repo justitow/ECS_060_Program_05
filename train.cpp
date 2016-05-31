@@ -47,20 +47,7 @@ void Train::run(Car *cars, Operation *operations, int *numOperations)
       stationz[node->origin].parkedCars += 1;
     }
 
-    if (stationz[node->origin].futureCarHead == NULL)
-    {
-      stationz[node->origin].futureCarHead = node;
-      stationz[node->origin].futureCarTail = node;
-      stationz[node->origin].futureCars += 1;
-    }
-    else
-    {
-      stationz[node->origin].futureCarTail->next = node;
-      node->prev = stationz[node->origin].futureCarTail;
-      stationz[node->origin].futureCarTail = node;
-      stationz[node->origin].futureCars += 1;
 
-    }
   }
 
 
@@ -72,7 +59,8 @@ void Train::run(Car *cars, Operation *operations, int *numOperations)
 
 
   while(totalCars > 0) {
-    stationz[currentStation].map(numStations);
+    if (!stationz[currentStation].mapped)
+      stationz[currentStation].map(numStations);
 
     if (stationz[currentStation].parkedCars > 0) {
       while (stationz[currentStation].parkedCars > 0 && loadedCars < 50) {
@@ -143,6 +131,8 @@ void Train::run(Car *cars, Operation *operations, int *numOperations)
     {
       if (node->destination == currentStation)
       {
+        if (node == trainHead)
+          trainHead = node->next;
         if (node->prev != NULL)
           node->prev->next = node->next;
         if (node->next != NULL)
