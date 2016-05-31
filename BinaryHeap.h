@@ -33,12 +33,13 @@
             void deleteMin( );
             void deleteMin( Comparable & minItem );
             void makeEmpty( );
+            void buildHeap( );
 
-          private:
+
+        private:
             int                currentSize;  // Number of elements in heap
             vector<Comparable> array;        // The heap array
 
-            void buildHeap( );
             void percolateDown( int hole );
         };
 
