@@ -1,7 +1,7 @@
 #! /bin/bash
 
 executableName=train.out
-maxSleep=60     # 1 minutes
+maxSleep=100000     # 1 minutes
 tooLong=0
 errorCount=0
 MakefileScore=0
