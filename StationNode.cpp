@@ -15,6 +15,11 @@ StationNode::StationNode()
   distance = 1000000000;
 }
 
+bool operator<(StationNode& lhs, StationNode& rhs )
+{
+  return lhs.distance < rhs.distance;
+}
+
 StationMap::StationMap()
 {
   mapped = false;
@@ -22,10 +27,7 @@ StationMap::StationMap()
   stationID = -1;
   stations = NULL;
   parkedCars = 0;
-  futureCars = 0;
 
-  futureCarHead = NULL;
-  futureCarTail = NULL;
   parkedCarHead = NULL;
   parkedCarTail = NULL;
 }

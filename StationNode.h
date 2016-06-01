@@ -23,6 +23,7 @@ public:
   int stationID;
 
   StationNode();
+  friend bool operator<(StationNode& lhs, StationNode& rhs);
 
 };
 
@@ -42,11 +43,7 @@ public:
   CarNode* parkedCarHead;
   CarNode* parkedCarTail;
 
-  CarNode* futureCarHead;
-  CarNode* futureCarTail;
-
   int parkedCars;
-  int futureCars;
 
   BinaryHeap<StationNode*>* unknown_heap;
   StationMap();
