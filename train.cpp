@@ -115,7 +115,8 @@ void Train::run(Car *cars, Operation *operations, int *numOperations)
         node->distance = stationz[currentStation].nodes[node->destination].distance;
         int curr_min = 2147483647;
 
-        if (node->distance < curr_min) {
+        if (node->distance < curr_min)
+        {
           this->destination = node->destination;
           curr_min = node->distance;
         }
@@ -159,7 +160,6 @@ void Train::run(Car *cars, Operation *operations, int *numOperations)
         operations[*numOperations].operation = 'D';
         *numOperations += 1;
 
-        cout << "dropped car " << node->ID << endl;
 
       }
 
