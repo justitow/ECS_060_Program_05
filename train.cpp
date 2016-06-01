@@ -58,17 +58,23 @@ void Train::run(Car *cars, Operation *operations, int *numOperations)
   }
 
 
-  while(totalCars > 0) {
+  while(totalCars > 0)
+  {
     if (!stationz[currentStation].mapped)
       stationz[currentStation].map(numStations);
 
     if (stationz[currentStation].parkedCars > 0) {
-      while (stationz[currentStation].parkedCars > 0 && loadedCars < 50) {
-        if (trainHead == NULL) {
+      while (stationz[currentStation].parkedCars > 0 && loadedCars < 50)
+      {
+
+        if (trainHead == NULL)
+        {
           trainHead = stationz[currentStation].parkedCarHead;
           trainTail = trainHead;
           if (stationz[currentStation].parkedCarHead->next)
             stationz[currentStation].parkedCarHead->next->prev = NULL;
+          if (stationz[currentStation].parkedCarHead == stationz[currentStation].parkedCarTail)
+            stationz[currentStation].parkedCarTail = NULL;
           stationz[currentStation].parkedCarHead = stationz[currentStation].parkedCarHead->next;
           trainHead->next = NULL;
           stationz[currentStation].parkedCars -= 1;
@@ -78,24 +84,32 @@ void Train::run(Car *cars, Operation *operations, int *numOperations)
           operations[*numOperations].operation = 'P';
           *numOperations += 1;
         }
-        else {
+        else
+        {
           trainTail->next = stationz[currentStation].parkedCarHead;
           trainTail->next->prev = trainTail;
-          if (stationz[currentStation].parkedCarHead->next != NULL) {
+
+          if (stationz[currentStation].parkedCarHead->next != NULL)
+          {
             stationz[currentStation].parkedCarHead->next->prev = NULL;
           }
+          if (stationz[currentStation].parkedCarHead == stationz[currentStation].parkedCarTail)
+            stationz[currentStation].parkedCarTail = NULL;
           stationz[currentStation].parkedCarHead = stationz[currentStation].parkedCarHead->next;
           trainTail->next->next = NULL;
           trainTail = trainTail->next;
           stationz[currentStation].parkedCars -= 1;
           loadedCars += 1;
-          operations[*numOperations].ID = trainHead->ID;
+          operations[*numOperations].ID = trainTail->ID;
           operations[*numOperations].time = curr_time;
           operations[*numOperations].operation = 'P';
           *numOperations += 1;
         }
       }
+    }
 
+    if (this->loadedCars > 0)
+    {
       node = trainHead;
       while (node != NULL) {
         node->distance = stationz[currentStation].nodes[node->destination].distance;
@@ -117,15 +131,14 @@ void Train::run(Car *cars, Operation *operations, int *numOperations)
      for (int i = 0; i < numStations; i++)
      {
        if (stationz[i].parkedCars > 0) {
-         if (stationz[currentStation].nodes[i].distance < curr_min) {
+         if (stationz[currentStation].nodes[i].distance < curr_min && stationz[currentStation].nodes[i].distance > 0) {
            this->destination = i;
          }
        }
      }
    }
 
-    this->mov(operations, numOperations,
-              &stationz[currentStation].nodes[destination]);
+    this->mov(operations, numOperations, &stationz[currentStation].nodes[destination]);
     node = trainHead;
     while (node != NULL)
     {
@@ -137,6 +150,8 @@ void Train::run(Car *cars, Operation *operations, int *numOperations)
           node->prev->next = node->next;
         if (node->next != NULL)
           node->next->prev = node->prev;
+        if (node == trainTail)
+          trainTail = node->prev;
         this->loadedCars -= 1;
         totalCars -= 1;
         operations[*numOperations].ID = node->ID;
@@ -145,11 +160,17 @@ void Train::run(Car *cars, Operation *operations, int *numOperations)
         *numOperations += 1;
 
         cout << "dropped car " << node->ID << endl;
+
       }
+
       node = node->next;
+
+
     }
 
   }
+
+
   //cout <<
 } // run()
 
